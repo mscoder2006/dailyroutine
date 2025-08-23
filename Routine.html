@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Daily Routine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: linear-gradient(to right, #00c6ff, #0072ff);
+      --card-bg: #fff;
+      --text: #333;
+      --accent: #0077b6;
+      --timeline: #0077b6;
+      --li-bg: #e9f1f7;
+      --li-hover: #caf0f8;
+      --footer-bg: #023e8a;
+      --footer-text: #fff;
+    }
+    body.dark {
+      --bg: linear-gradient(to right, #232526, #414345);
+      --card-bg: #232526;
+      --text: #f1f1f1;
+      --accent: #90e0ef;
+      --timeline: #90e0ef;
+      --li-bg: #333842;
+      --li-hover: #49516b;
+      --footer-bg: #222831;
+      --footer-text: #fff;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px 20px;
+      color: white;
+      position: relative;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: var(--text);
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.2em;
+      color: var(--text);
+    }
+    header img {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 250px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    #clock-date {
+      font-size: 1.3em;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    #progress-container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 20px auto;
+      background: #e0e0e0;
+      border-radius: 10px;
+      height: 18px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      width: 0%;
+      transition: width 0.5s;
+    }
+    body.dark #progress-bar {
+      background: linear-gradient(90deg, #90e0ef, #00b4d8);
+    }
+    .routine {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background: var(--card-bg);
+      border-radius: 15px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transition: background 0.4s;
+    }
+    .routine h2 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .filter-btns {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .filter-btns button {
+      background: var(--li-bg);
+      color: var(--accent);
+      border: none;
+      padding: 8px 18px;
+      margin: 0 6px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    .filter-btns button.active,
+    .filter-btns button:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    ul {
+      position: relative;
+      list-style: none;
+      padding-left: 30px;
+    }
+    ul::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--timeline);
+      border-radius: 2px;
+    }
+    li {
+      background: var(--li-bg);
+      margin: 20px 0;
+      padding: 15px 20px;
+      border-radius: 10px;
+      position: relative;
+      transition: 0.3s, background 0.4s;
+      color: var(--text);
+      display: block;
+    }
+    li:hover {
+      background: var(--li-hover);
+      transform: scale(1.02);
+    }
+    li::before {
+      content: '';
+      position: absolute;
+      left: -3px;
+      top: 20px;
+      width: 14px;
+      height: 14px;
+      background: var(--timeline);
+      border-radius: 50%;
+      border: 2px solid var(--card-bg);
+    }
+    .time {
+      font-weight: bold;
+      color: var(--accent);
+    }
+    #mode-toggle {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: var(--li-bg);
+      color: var(--accent);
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      font-size: 1.3em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: background 0.3s, color 0.3s;
+    }
+    #mode-toggle:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      margin-top: 40px;
+      transition: background 0.4s, color 0.4s;
+    }
+  </style>
+</head>
+<body>
+  <header>
+  <button id="mode-toggle" title="Toggle dark/light mode">🌙</button>
+  <div id="clock-date"></div>
+  <h1>My Daily Routine</h1>
+  <p>How I spend my day ⏰</p>
+  </header>
+
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <div class="routine">
+    <h2>Schedule</h2>
+    <div class="filter-btns">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="morning">Morning</button>
+      <button data-filter="afternoon">Afternoon</button>
+      <button data-filter="evening">Evening</button>
+    </div>
+    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap;">
+      <input id="routine-time" type="time" style="flex:0.7; min-width:110px; max-width:140px; padding: 10px 8px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em; outline: none;">
+      <input id="routine-desc" type="text" placeholder="Routine description (e.g. Yoga 🧘)" style="flex:1.5; min-width:120px; max-width:220px; padding: 10px 14px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em; outline: none;">
+      <select id="routine-part" style="padding: 10px 8px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em;">
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="evening">Evening</option>
+      </select>
+      <button id="add-routine-btn" style="background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.2s;">Add Routine</button>
+    </div>
+    <ul id="routine-list">
+  <li data-part="morning"><i class="fas fa-sun"></i> <span class="time">6:00 AM</span> – Wake up & Exercise 🏃 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+  <li data-part="morning"><i class="fas fa-mug-hot"></i> <span class="time">7:30 AM</span> – Breakfast 🍳 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+  <li data-part="afternoon"><i class="fas fa-school"></i> <span class="time">11:00 AM</span> – College Classes 🎓 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+  <li data-part="afternoon"><i class="fas fa-home"></i> <span class="time">4:30 PM</span> – Back Home & Rest 🏠 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+  <li data-part="evening"><i class="fas fa-book"></i> <span class="time">6:00 PM</span> – Study & Homework 📚 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+  <li data-part="evening"><i class="fas fa-utensils"></i> <span class="time">9:00 PM</span> – Dinner 🍽️ <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+  <li data-part="evening"><i class="fas fa-moon"></i> <span class="time">11:00 PM</span> – Sleep 😴 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+    </ul>
+  </div>
+
+  <!-- My Tasks Section -->
+  <div class="routine" style="margin-top: 24px;">
+    <h2>My Tasks</h2>
+    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap;">
+      <input id="task-input" type="text" placeholder="Add a new task..." style="flex:1; min-width:180px; max-width:320px; padding: 10px 14px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em; outline: none;">
+      <button id="add-task-btn" style="background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.2s;">Add</button>
+    </div>
+    <ul id="task-list" style="list-style:none; padding-left:0; margin:0;"></ul>
+  </div>
+
+  <footer>
+  <p>© 2025 My Daily Routine Website | Made with ❤️</p>
+  </footer>
+
+  <script>
+    // Digital Clock & Date
+    function updateClock() {
+  const now = new Date();
+  // 12-hour format with AM/PM
+  let hours = now.getHours();
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  const time = `${hours}:${minutes}:${seconds} ${ampm}`;
+  const date = now.toLocaleDateString([], {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+  document.getElementById('clock-date').textContent = `${date} | ${time}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Progress Bar of the Day
+    function updateProgressBar() {
+      const now = new Date();
+      const seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+      const percent = (seconds / 86400) * 100;
+      document.getElementById('progress-bar').style.width = percent + '%';
+    }
+    setInterval(updateProgressBar, 1000);
+    updateProgressBar();
+
+    // Filter Routine
+    const filterBtns = document.querySelectorAll('.filter-btns button');
+    const routineItems = document.querySelectorAll('#routine-list li');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+        routineItems.forEach(li => {
+          if (filter === 'all' || li.getAttribute('data-part') === filter) {
+            li.style.display = '';
+          } else {
+            li.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Dark/Light Mode Toggle
+    const modeBtn = document.getElementById('mode-toggle');
+    function setMode(dark) {
+      if (dark) {
+        document.body.classList.add('dark');
+        modeBtn.textContent = '☀️';
+        modeBtn.title = 'Switch to light mode';
+      } else {
+        document.body.classList.remove('dark');
+        modeBtn.textContent = '🌙';
+        modeBtn.title = 'Switch to dark mode';
+      }
+    }
+    // Remember mode
+    const savedMode = localStorage.getItem('darkMode');
+    setMode(savedMode === 'true');
+    modeBtn.addEventListener('click', () => {
+      const isDark = !document.body.classList.contains('dark');
+      setMode(isDark);
+      localStorage.setItem('darkMode', isDark);
+    });
+    // --- My Tasks Section Logic ---
+    // --- Add Routine Section Logic ---
+    const routineInput = document.getElementById('routine-input');
+    const routinePart = document.getElementById('routine-part');
+    const addRoutineBtn = document.getElementById('add-routine-btn');
+    const routineList = document.getElementById('routine-list');
+
+    function addRoutine() {
+      const text = routineInput.value.trim();
+      const part = routinePart.value;
+      if (!text) return;
+      const li = document.createElement('li');
+      li.setAttribute('data-part', part);
+      li.innerHTML = text;
+      li.style.background = 'var(--li-bg)';
+      li.style.margin = '20px 0';
+      li.style.padding = '15px 20px';
+      li.style.borderRadius = '10px';
+      li.style.position = 'relative';
+      li.style.transition = '0.3s, background 0.4s';
+      li.style.color = 'var(--text)';
+      li.style.display = 'block';
+      routineList.appendChild(li);
+      routineInput.value = '';
+      // Optionally, re-apply filter
+      const activeBtn = document.querySelector('.filter-btns button.active');
+      if (activeBtn) {
+        const filter = activeBtn.getAttribute('data-filter');
+        const routineItems = document.querySelectorAll('#routine-list li');
+        routineItems.forEach(li => {
+          if (filter === 'all' || li.getAttribute('data-part') === filter) {
+            li.style.display = '';
+          } else {
+            li.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    if (addRoutineBtn && routineInput && routinePart && routineList) {
+      addRoutineBtn.addEventListener('click', addRoutine);
+      routineInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') addRoutine();
+      });
+    }
+    const taskInput = document.getElementById('task-input');
+    const addTaskBtn = document.getElementById('add-task-btn');
+    const taskList = document.getElementById('task-list');
+
+    function loadTasks() {
+      const tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
+      taskList.innerHTML = '';
+      tasks.forEach((task, idx) => {
+        const li = document.createElement('li');
+        li.style.background = 'var(--li-bg)';
+        li.style.margin = '10px 0';
+        li.style.padding = '12px 16px';
+        li.style.borderRadius = '8px';
+        li.style.display = 'flex';
+        li.style.alignItems = 'center';
+        li.style.justifyContent = 'space-between';
+        li.innerHTML = `<span>${task}</span> <button style="background: #ff6b6b; color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-size: 0.95em; cursor: pointer;">Remove</button>`;
+        li.querySelector('button').onclick = function() {
+          removeTask(idx);
+        };
+        taskList.appendChild(li);
+      });
+    }
+
+    function addTask() {
+      const val = taskInput.value.trim();
+      if (!val) return;
+      const tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
+      tasks.push(val);
+      localStorage.setItem('myTasks', JSON.stringify(tasks));
+      taskInput.value = '';
+      loadTasks();
+    }
+
+    function removeTask(idx) {
+      const tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
+      tasks.splice(idx, 1);
+      localStorage.setItem('myTasks', JSON.stringify(tasks));
+      loadTasks();
+    }
+
+    if (addTaskBtn && taskInput && taskList) {
+      addTaskBtn.addEventListener('click', addTask);
+      taskInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') addTask();
+      });
+      loadTasks();
+    }
+  </script>
+</body>
+</html>
