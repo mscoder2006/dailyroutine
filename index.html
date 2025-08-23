@@ -39,7 +39,6 @@
     header {
       text-align: center;
       padding: 40px 20px 20px 20px;
-      color: white;
       position: relative;
     }
     header h1 {
@@ -95,13 +94,14 @@
     .filter-btns {
       text-align: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
     }
     .filter-btns button {
       background: var(--li-bg);
       color: var(--accent);
       border: none;
       padding: 8px 18px;
-      margin: 0 6px;
+      margin: 6px 6px;
       border-radius: 8px;
       font-size: 1em;
       cursor: pointer;
@@ -137,6 +137,7 @@
       transition: 0.3s, background 0.4s;
       color: var(--text);
       display: block;
+      word-wrap: break-word;
     }
     li:hover {
       background: var(--li-hover);
@@ -185,7 +186,6 @@
       transition: background 0.4s, color 0.4s;
     }
     .delete-routine-btn, .delete-task-btn {
-      float:right; 
       background:#ff6b6b; 
       color:#fff; 
       border:none; 
@@ -194,6 +194,59 @@
       font-size:0.95em; 
       cursor:pointer; 
       margin-left:10px;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .routine {
+        margin: 20px 15px;
+        padding: 15px;
+      }
+      header h1 {
+        font-size: 2em;
+      }
+      header p {
+        font-size: 1em;
+      }
+      #clock-date {
+        font-size: 1.1em;
+      }
+      #progress-container {
+        max-width: 95%;
+      }
+      .filter-btns button {
+        padding: 6px 12px;
+        margin: 4px 4px;
+        font-size: 0.9em;
+      }
+      #mode-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.6em;
+      }
+      header p {
+        font-size: 0.9em;
+      }
+      #clock-date {
+        font-size: 1em;
+      }
+      .routine input, .routine select, .routine button {
+        flex: 1 1 100%;
+        margin-bottom: 8px;
+      }
+      .routine div[style*="display:flex"] {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      li {
+        padding: 12px 14px;
+      }
     }
   </style>
 </head>
@@ -209,6 +262,7 @@
     <div id="progress-bar"></div>
   </div>
 
+  <!-- Routine Section -->
   <div class="routine">
     <h2>Schedule</h2>
     <div class="filter-btns">
@@ -217,32 +271,28 @@
       <button data-filter="afternoon">Afternoon</button>
       <button data-filter="evening">Evening</button>
     </div>
-    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap;">
-      <input id="routine-time" type="time" style="flex:0.7; min-width:110px; max-width:140px; padding: 10px 8px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em; outline: none;">
-      <input id="routine-desc" type="text" placeholder="Routine description (e.g. Yoga 🧘)" style="flex:1.5; min-width:120px; max-width:220px; padding: 10px 14px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em; outline: none;">
-      <select id="routine-part" style="padding: 10px 8px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em;">
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px;">
+      <input id="routine-time" type="time" placeholder="Time">
+      <input id="routine-desc" type="text" placeholder="Routine description">
+      <select id="routine-part">
         <option value="morning">Morning</option>
         <option value="afternoon">Afternoon</option>
         <option value="evening">Evening</option>
       </select>
-      <button id="add-routine-btn" style="background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.2s;">Add Routine</button>
+      <button id="add-routine-btn">Add Routine</button>
     </div>
     <ul id="routine-list">
       <li data-part="morning"><i class="fas fa-sun"></i> <span class="time">6:00 AM</span> – Wake up & Exercise 🏃 <button class="delete-routine-btn">Delete</button></li>
       <li data-part="morning"><i class="fas fa-mug-hot"></i> <span class="time">7:30 AM</span> – Breakfast 🍳 <button class="delete-routine-btn">Delete</button></li>
-      <li data-part="afternoon"><i class="fas fa-school"></i> <span class="time">11:00 AM</span> – College Classes 🎓 <button class="delete-routine-btn">Delete</button></li>
-      <li data-part="afternoon"><i class="fas fa-home"></i> <span class="time">4:30 PM</span> – Back Home & Rest 🏠 <button class="delete-routine-btn">Delete</button></li>
-      <li data-part="evening"><i class="fas fa-book"></i> <span class="time">6:00 PM</span> – Study & Homework 📚 <button class="delete-routine-btn">Delete</button></li>
-      <li data-part="evening"><i class="fas fa-utensils"></i> <span class="time">9:00 PM</span> – Dinner 🍽️ <button class="delete-routine-btn">Delete</button></li>
-      <li data-part="evening"><i class="fas fa-moon"></i> <span class="time">11:00 PM</span> – Sleep 😴 <button class="delete-routine-btn">Delete</button></li>
     </ul>
   </div>
 
-  <div class="routine" style="margin-top: 24px;">
+  <!-- Tasks Section -->
+  <div class="routine">
     <h2>My Tasks</h2>
-    <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap;">
-      <input id="task-input" type="text" placeholder="Add a new task..." style="flex:1; min-width:180px; max-width:320px; padding: 10px 14px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em; outline: none;">
-      <button id="add-task-btn" style="background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.2s;">Add</button>
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px;">
+      <input id="task-input" type="text" placeholder="Add a new task">
+      <button id="add-task-btn">Add</button>
     </div>
     <ul id="task-list"></ul>
   </div>
@@ -252,150 +302,113 @@
   </footer>
 
   <script>
-    // Clock & Progress Bar
+    // Clock
     function updateClock() {
       const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2,'0');
-      const seconds = now.getSeconds().toString().padStart(2,'0');
-      const ampm = hours >=12 ? 'PM':'AM';
-      hours = hours % 12 || 12;
-      const time = `${hours}:${minutes}:${seconds} ${ampm}`;
-      const date = now.toLocaleDateString([], {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-      document.getElementById('clock-date').textContent = `${date} | ${time}`;
+      let h = now.getHours(), m = now.getMinutes().toString().padStart(2,'0'), s = now.getSeconds().toString().padStart(2,'0');
+      const ampm = h >= 12 ? 'PM':'AM';
+      h = h % 12 || 12;
+      const dateStr = now.toLocaleDateString([], {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+      document.getElementById('clock-date').textContent = `${dateStr} | ${h}:${m}:${s} ${ampm}`;
     }
     setInterval(updateClock,1000);
     updateClock();
 
+    // Progress bar
     function updateProgressBar() {
       const now = new Date();
-      const seconds = now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds();
-      const percent = (seconds/86400)*100;
-      document.getElementById('progress-bar').style.width = percent+'%';
+      const sec = now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds();
+      const pct = (sec/86400)*100;
+      document.getElementById('progress-bar').style.width = pct+'%';
     }
     setInterval(updateProgressBar,1000);
     updateProgressBar();
 
-    // Dark/Light Mode
+    // Dark mode
     const modeBtn = document.getElementById('mode-toggle');
-    function setMode(dark) {
-      if(dark) {
-        document.body.classList.add('dark');
-        modeBtn.textContent = '☀️';
-      } else {
-        document.body.classList.remove('dark');
-        modeBtn.textContent = '🌙';
-      }
-      localStorage.setItem('darkMode', dark);
-    }
-    const savedMode = localStorage.getItem('darkMode') === 'true';
-    setMode(savedMode);
-    modeBtn.addEventListener('click', ()=>setMode(!document.body.classList.contains('dark')));
+    const savedMode = localStorage.getItem('darkMode')==='true';
+    document.body.classList.toggle('dark', savedMode);
+    modeBtn.textContent = savedMode?'☀️':'🌙';
+    modeBtn.onclick = ()=>{
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+      modeBtn.textContent = document.body.classList.contains('dark')?'☀️':'🌙';
+    };
 
-    // Routine Filtering
-    const filterBtns = document.querySelectorAll('.filter-btns button');
-    const routineList = document.getElementById('routine-list');
-    filterBtns.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        filterBtns.forEach(b=>b.classList.remove('active'));
+    // Routine filtering
+    document.querySelectorAll('.filter-btns button').forEach(btn=>{
+      btn.onclick = ()=>{
+        document.querySelectorAll('.filter-btns button').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
         const filter = btn.dataset.filter;
-        routineList.querySelectorAll('li').forEach(li=>{
+        document.querySelectorAll('#routine-list li').forEach(li=>{
           li.style.display = (filter==='all'||li.dataset.part===filter)?'':'none';
         });
-      });
+      };
     });
 
-    // Routine Add & Delete
+    // Routine add/delete
     const routineTime = document.getElementById('routine-time');
     const routineDesc = document.getElementById('routine-desc');
     const routinePart = document.getElementById('routine-part');
     const addRoutineBtn = document.getElementById('add-routine-btn');
+    const routineList = document.getElementById('routine-list');
 
-    function createDeleteButton() {
+    function createDeleteBtn() {
       const btn = document.createElement('button');
-      btn.textContent = 'Delete';
-      btn.classList.add('delete-routine-btn');
-      btn.onclick = function() {
-        btn.parentElement.remove();
-      }
+      btn.textContent='Delete';
+      btn.className='delete-routine-btn';
+      btn.onclick = ()=>btn.parentElement.remove();
       return btn;
     }
 
-    function addRoutine() {
-      const time = routineTime.value;
-      const desc = routineDesc.value.trim();
-      const part = routinePart.value;
+    function addRoutine(){
+      const time = routineTime.value, desc=routineDesc.value.trim(), part=routinePart.value;
       if(!time || !desc) return;
       const li = document.createElement('li');
       li.dataset.part = part;
       li.innerHTML = `<i class="fas fa-clock"></i> <span class="time">${time}</span> – ${desc} `;
-      li.appendChild(createDeleteButton());
+      li.appendChild(createDeleteBtn());
       routineList.appendChild(li);
-      routineTime.value = '';
-      routineDesc.value = '';
-      // Apply active filter
-      const activeFilter = document.querySelector('.filter-btns button.active').dataset.filter;
-      routineList.querySelectorAll('li').forEach(li=>{
-        li.style.display = (activeFilter==='all'||li.dataset.part===activeFilter)?'':'none';
-      });
+      routineTime.value=''; routineDesc.value='';
     }
 
-    addRoutineBtn.addEventListener('click', addRoutine);
+    addRoutineBtn.onclick = addRoutine;
     routineDesc.addEventListener('keydown', e=>{if(e.key==='Enter') addRoutine();});
     routineTime.addEventListener('keydown', e=>{if(e.key==='Enter') addRoutine();});
 
-    // Enable existing delete buttons
-    document.querySelectorAll('.delete-routine-btn').forEach(btn=>{
-      btn.onclick = ()=>btn.parentElement.remove();
-    });
+    document.querySelectorAll('.delete-routine-btn').forEach(btn=>btn.onclick=()=>btn.parentElement.remove());
 
-    // Tasks Add & Delete
-    const taskInput = document.getElementById('task-input');
-    const addTaskBtn = document.getElementById('add-task-btn');
-    const taskList = document.getElementById('task-list');
+    // Tasks add/remove
+    const taskInput=document.getElementById('task-input');
+    const addTaskBtn=document.getElementById('add-task-btn');
+    const taskList=document.getElementById('task-list');
 
-    function loadTasks() {
+    function loadTasks(){
       const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
-      taskList.innerHTML = '';
+      taskList.innerHTML='';
       tasks.forEach((task, idx)=>{
-        const li = document.createElement('li');
-        li.style.background = 'var(--li-bg)';
-        li.style.margin = '10px 0';
-        li.style.padding = '12px 16px';
-        li.style.borderRadius = '8px';
-        li.style.display = 'flex';
-        li.style.alignItems = 'center';
-        li.style.justifyContent = 'space-between';
-        li.innerHTML = `<span>${task}</span>`;
+        const li=document.createElement('li');
+        li.style.cssText="background:var(--li-bg); margin:10px 0; padding:12px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;";
+        li.innerHTML=`<span>${task}</span>`;
         const btn = document.createElement('button');
-        btn.textContent = 'Remove';
-        btn.classList.add('delete-task-btn');
-        btn.onclick = ()=>removeTask(idx);
+        btn.textContent='Remove';
+        btn.className='delete-task-btn';
+        btn.onclick=()=>{tasks.splice(idx,1); localStorage.setItem('myTasks',JSON.stringify(tasks)); loadTasks();};
         li.appendChild(btn);
         taskList.appendChild(li);
       });
     }
 
-    function addTask() {
-      const val = taskInput.value.trim();
-      if(!val) return;
+    addTaskBtn.onclick=()=>{
+      const val=taskInput.value.trim(); if(!val) return;
       const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
       tasks.push(val);
-      localStorage.setItem('myTasks', JSON.stringify(tasks));
-      taskInput.value = '';
+      localStorage.setItem('myTasks',JSON.stringify(tasks));
+      taskInput.value='';
       loadTasks();
-    }
-
-    function removeTask(idx) {
-      const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
-      tasks.splice(idx,1);
-      localStorage.setItem('myTasks', JSON.stringify(tasks));
-      loadTasks();
-    }
-
-    addTaskBtn.addEventListener('click', addTask);
-    taskInput.addEventListener('keydown', e=>{if(e.key==='Enter') addTask();});
+    };
+    taskInput.addEventListener('keydown', e=>{if(e.key==='Enter') addTaskBtn.onclick();});
     loadTasks();
   </script>
 </body>
