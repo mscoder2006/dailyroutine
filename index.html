@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Daily Routine</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,7 +17,11 @@
       --li-hover: #caf0f8;
       --footer-bg: #023e8a;
       --footer-text: #fff;
+      --border-radius: 15px;
+      --shadow: 0 6px 12px rgba(0,0,0,0.15);
+      --transition: 0.3s ease;
     }
+    
     body.dark {
       --bg: linear-gradient(to right, #232526, #414345);
       --card-bg: #232526;
@@ -28,6 +33,11 @@
       --footer-bg: #222831;
       --footer-text: #fff;
     }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -35,29 +45,44 @@
       background: var(--bg);
       color: var(--text);
       transition: background 0.4s, color 0.4s;
+      min-height: 100vh;
+      line-height: 1.6;
     }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
     header {
       text-align: center;
       padding: 40px 20px 20px 20px;
       position: relative;
     }
+    
     header h1 {
       margin: 0;
-      font-size: 2.5em;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
       color: var(--text);
+      font-weight: 600;
     }
+    
     header p {
       margin-top: 10px;
-      font-size: 1.2em;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
       color: var(--text);
+      opacity: 0.9;
     }
+    
     #clock-date {
-      font-size: 1.3em;
+      font-size: clamp(1rem, 2.8vw, 1.3rem);
       margin-bottom: 10px;
       color: var(--accent);
       font-weight: 600;
       letter-spacing: 1px;
     }
+    
     #progress-container {
       width: 100%;
       max-width: 700px;
@@ -68,56 +93,122 @@
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
+    
     #progress-bar {
       height: 100%;
       background: linear-gradient(90deg, #00c6ff, #0072ff);
       width: 0%;
       transition: width 0.5s;
     }
+    
     body.dark #progress-bar {
       background: linear-gradient(90deg, #90e0ef, #00b4d8);
     }
+    
     .routine {
       max-width: 700px;
-      margin: 40px auto;
+      margin: 20px auto;
       padding: 20px;
       background: var(--card-bg);
-      border-radius: 15px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
       transition: background 0.4s;
     }
+    
     .routine h2 {
       text-align: center;
       color: var(--accent);
       margin-bottom: 20px;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
     }
+    
     .filter-btns {
-      text-align: center;
-      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
       flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
     }
+    
     .filter-btns button {
       background: var(--li-bg);
       color: var(--accent);
       border: none;
-      padding: 8px 18px;
-      margin: 6px 6px;
+      padding: 10px 18px;
       border-radius: 8px;
-      font-size: 1em;
+      font-size: clamp(0.85rem, 2vw, 1rem);
       cursor: pointer;
       font-weight: 600;
-      transition: background 0.2s, color 0.2s;
+      transition: var(--transition);
+      min-height: 44px;
+      touch-action: manipulation;
     }
+    
     .filter-btns button.active,
     .filter-btns button:hover {
       background: var(--accent);
       color: #fff;
+      transform: translateY(-2px);
     }
+    
+    .input-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    
+    .input-row input,
+    .input-row select,
+    .input-row button {
+      flex: 1;
+      min-width: 120px;
+      max-width: 200px;
+      padding: 12px 16px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: var(--transition);
+      min-height: 44px;
+    }
+    
+    .input-row input,
+    .input-row select {
+      background: var(--li-bg);
+      color: var(--text);
+      border-color: var(--li-bg);
+    }
+    
+    .input-row input:focus,
+    .input-row select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
+    }
+    
+    .input-row button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      touch-action: manipulation;
+    }
+    
+    .input-row button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
     ul {
       position: relative;
       list-style: none;
       padding-left: 30px;
+      margin: 0;
     }
+    
     ul::before {
       content: '';
       position: absolute;
@@ -128,173 +219,443 @@
       background: var(--timeline);
       border-radius: 2px;
     }
+    
     li {
       background: var(--li-bg);
-      margin: 20px 0;
-      padding: 15px 20px;
+      margin: 15px 0;
+      padding: 16px 20px;
       border-radius: 10px;
       position: relative;
-      transition: 0.3s, background 0.4s;
+      transition: var(--transition);
       color: var(--text);
-      display: block;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
       word-wrap: break-word;
+      min-height: 60px;
     }
+    
     li:hover {
       background: var(--li-hover);
-      transform: scale(1.02);
+      transform: translateX(5px);
     }
+    
     li::before {
       content: '';
       position: absolute;
       left: -3px;
-      top: 20px;
+      top: 50%;
+      transform: translateY(-50%);
       width: 14px;
       height: 14px;
       background: var(--timeline);
       border-radius: 50%;
       border: 2px solid var(--card-bg);
     }
+    
+    .task-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
     .time {
       font-weight: bold;
       color: var(--accent);
+      white-space: nowrap;
     }
+    
     #mode-toggle {
       position: absolute;
-      top: 18px;
-      right: 18px;
+      top: 20px;
+      right: 20px;
       background: var(--li-bg);
       color: var(--accent);
       border: none;
       border-radius: 50%;
-      width: 42px;
-      height: 42px;
-      font-size: 1.3em;
+      width: 50px;
+      height: 50px;
+      font-size: 1.4em;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: background 0.3s, color 0.3s;
+      transition: var(--transition);
+      touch-action: manipulation;
     }
+    
     #mode-toggle:hover {
       background: var(--accent);
       color: #fff;
+      transform: scale(1.1);
     }
+    
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 30px 20px;
       background: var(--footer-bg);
       color: var(--footer-text);
       margin-top: 40px;
       transition: background 0.4s, color 0.4s;
     }
-    .delete-routine-btn, .delete-task-btn {
-      background:#ff6b6b; 
-      color:#fff; 
-      border:none; 
-      border-radius:6px; 
-      padding:4px 12px; 
-      font-size:0.95em; 
-      cursor:pointer; 
-      margin-left:10px;
+    
+    .delete-routine-btn, 
+    .delete-task-btn {
+      background: #ff6b6b;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      white-space: nowrap;
+      min-height: 36px;
+      touch-action: manipulation;
+    }
+    
+    .delete-routine-btn:hover,
+    .delete-task-btn:hover {
+      background: #ff5252;
+      transform: translateY(-1px);
     }
 
-    /* Responsive Styles */
-    @media (max-width: 768px) {
+    /* Tablet Styles */
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 15px;
+      }
+      
       .routine {
-        margin: 20px 15px;
-        padding: 15px;
+        margin: 15px auto;
+        padding: 18px;
       }
-      header h1 {
-        font-size: 2em;
+      
+      .input-row {
+        gap: 8px;
       }
-      header p {
-        font-size: 1em;
-      }
-      #clock-date {
-        font-size: 1.1em;
-      }
-      #progress-container {
-        max-width: 95%;
-      }
-      .filter-btns button {
-        padding: 6px 12px;
-        margin: 4px 4px;
-        font-size: 0.9em;
-      }
-      #mode-toggle {
-        width: 38px;
-        height: 38px;
-        font-size: 1.1em;
+      
+      .input-row input,
+      .input-row select,
+      .input-row button {
+        min-width: 100px;
+        padding: 11px 14px;
       }
     }
 
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.6em;
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 10px;
       }
-      header p {
-        font-size: 0.9em;
+      
+      header {
+        padding: 30px 15px 15px 15px;
       }
-      #clock-date {
-        font-size: 1em;
+      
+      .routine {
+        margin: 15px 10px;
+        padding: 16px;
       }
-      .routine input, .routine select, .routine button {
-        flex: 1 1 100%;
-        margin-bottom: 8px;
+      
+      .filter-btns {
+        gap: 6px;
       }
-      .routine div[style*="display:flex"] {
+      
+      .filter-btns button {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+        min-height: 40px;
+      }
+      
+      .input-row {
         flex-direction: column;
         align-items: stretch;
+        gap: 12px;
       }
+      
+      .input-row input,
+      .input-row select,
+      .input-row button {
+        flex: none;
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+      }
+      
+      ul {
+        padding-left: 25px;
+      }
+      
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 14px 16px;
+        min-height: auto;
+      }
+      
+      .task-content {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      
+      .delete-routine-btn,
+      .delete-task-btn {
+        align-self: flex-end;
+        margin-top: 8px;
+      }
+      
+      #mode-toggle {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2em;
+        top: 15px;
+        right: 15px;
+      }
+      
+      #progress-container {
+        margin: 0 10px 20px 10px;
+        height: 16px;
+      }
+    }
+
+    /* Small Mobile Styles */
+    @media (max-width: 480px) {
+      header {
+        padding: 20px 10px;
+      }
+      
+      .routine {
+        margin: 10px 5px;
+        padding: 12px;
+        border-radius: 12px;
+      }
+      
+      .filter-btns {
+        gap: 4px;
+      }
+      
+      .filter-btns button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        min-height: 36px;
+      }
+      
+      .input-row {
+        gap: 10px;
+      }
+      
+      .input-row input,
+      .input-row select,
+      .input-row button {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+      
+      ul {
+        padding-left: 20px;
+      }
+      
+      ul::before {
+        left: 8px;
+        width: 3px;
+      }
+      
       li {
         padding: 12px 14px;
       }
+      
+      li::before {
+        left: -7px;
+        width: 12px;
+        height: 12px;
+      }
+      
+      .delete-routine-btn,
+      .delete-task-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        min-height: 32px;
+      }
+      
+      #mode-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+        top: 10px;
+        right: 10px;
+      }
+      
+      footer {
+        padding: 20px 15px;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Extra Small Mobile */
+    @media (max-width: 375px) {
+      .routine {
+        margin: 8px 3px;
+        padding: 10px;
+      }
+      
+      .filter-btns button {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+        min-height: 32px;
+      }
+      
+      li {
+        padding: 10px 12px;
+      }
+      
+      .task-content {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* High DPI / Retina Display Support */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .filter-btns button,
+      .input-row button,
+      .delete-routine-btn,
+      .delete-task-btn {
+        border: 0.5px solid transparent;
+      }
+    }
+
+    /* Touch Device Optimizations */
+    @media (hover: none) and (pointer: coarse) {
+      .filter-btns button,
+      .input-row button,
+      .delete-routine-btn,
+      .delete-task-btn,
+      #mode-toggle {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      
+      li:hover {
+        transform: none;
+      }
+      
+      .filter-btns button:hover,
+      .input-row button:hover,
+      #mode-toggle:hover {
+        transform: none;
+      }
+    }
+
+    /* Landscape Mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      header {
+        padding: 20px 15px 10px 15px;
+      }
+      
+      .routine {
+        margin: 10px auto;
+      }
+      
+      .input-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      
+      .input-row input,
+      .input-row select,
+      .input-row button {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+
+    /* Dark mode progress bar for mobile */
+    @media (max-width: 768px) {
+      body.dark #progress-container {
+        background: #444;
+      }
+    }
+
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus styles for keyboard navigation */
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <button id="mode-toggle" title="Toggle dark/light mode">🌙</button>
-    <div id="clock-date"></div>
-    <h1>My Daily Routine</h1>
-    <p>How I spend my day ⏰</p>
-  </header>
+  <div class="container">
+    <header>
+      <button id="mode-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">🌙</button>
+      <div id="clock-date"></div>
+      <h1>My Daily Routine</h1>
+      <p>How I spend my day ⏰</p>
+    </header>
 
-  <div id="progress-container">
-    <div id="progress-bar"></div>
-  </div>
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
 
-  <!-- Routine Section -->
-  <div class="routine">
-    <h2>Schedule</h2>
-    <div class="filter-btns">
-      <button class="active" data-filter="all">All</button>
-      <button data-filter="morning">Morning</button>
-      <button data-filter="afternoon">Afternoon</button>
-      <button data-filter="evening">Evening</button>
+    <!-- Routine Section -->
+    <div class="routine">
+      <h2>Schedule</h2>
+      <div class="filter-btns">
+        <button class="active" data-filter="all">All</button>
+        <button data-filter="morning">Morning</button>
+        <button data-filter="afternoon">Afternoon</button>
+        <button data-filter="evening">Evening</button>
+      </div>
+      <div class="input-row">
+        <input id="routine-time" type="time" placeholder="Time" aria-label="Routine time">
+        <input id="routine-desc" type="text" placeholder="Routine description" aria-label="Routine description">
+        <select id="routine-part" aria-label="Time of day">
+          <option value="morning">Morning</option>
+          <option value="afternoon">Afternoon</option>
+          <option value="evening">Evening</option>
+        </select>
+        <button id="add-routine-btn">Add Routine</button>
+      </div>
+      <ul id="routine-list">
+        <li data-part="morning">
+          <div class="task-content">
+            <i class="fas fa-sun"></i> 
+            <span class="time">6:00 AM</span> 
+            – Wake up & Exercise 🏃
+          </div>
+          <button class="delete-routine-btn" aria-label="Delete routine">Delete</button>
+        </li>
+        <li data-part="morning">
+          <div class="task-content">
+            <i class="fas fa-mug-hot"></i> 
+            <span class="time">7:30 AM</span> 
+            – Breakfast 🍳
+          </div>
+          <button class="delete-routine-btn" aria-label="Delete routine">Delete</button>
+        </li>
+      </ul>
     </div>
-    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px;">
-      <input id="routine-time" type="time" placeholder="Time">
-      <input id="routine-desc" type="text" placeholder="Routine description">
-      <select id="routine-part">
-        <option value="morning">Morning</option>
-        <option value="afternoon">Afternoon</option>
-        <option value="evening">Evening</option>
-      </select>
-      <button id="add-routine-btn">Add Routine</button>
-    </div>
-    <ul id="routine-list">
-      <li data-part="morning"><i class="fas fa-sun"></i> <span class="time">6:00 AM</span> – Wake up & Exercise 🏃 <button class="delete-routine-btn">Delete</button></li>
-      <li data-part="morning"><i class="fas fa-mug-hot"></i> <span class="time">7:30 AM</span> – Breakfast 🍳 <button class="delete-routine-btn">Delete</button></li>
-    </ul>
-  </div>
 
-  <!-- Tasks Section -->
-  <div class="routine">
-    <h2>My Tasks</h2>
-    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px;">
-      <input id="task-input" type="text" placeholder="Add a new task">
-      <button id="add-task-btn">Add</button>
+    <!-- Tasks Section -->
+    <div class="routine">
+      <h2>My Tasks</h2>
+      <div class="input-row">
+        <input id="task-input" type="text" placeholder="Add a new task" aria-label="New task">
+        <button id="add-task-btn">Add</button>
+      </div>
+      <ul id="task-list"></ul>
     </div>
-    <ul id="task-list"></ul>
   </div>
 
   <footer>
@@ -324,16 +685,18 @@
     setInterval(updateProgressBar,1000);
     updateProgressBar();
 
-    // Dark mode
+    // Dark mode (using in-memory storage instead of localStorage)
+    let darkModeEnabled = false;
     const modeBtn = document.getElementById('mode-toggle');
-    const savedMode = localStorage.getItem('darkMode')==='true';
-    document.body.classList.toggle('dark', savedMode);
-    modeBtn.textContent = savedMode?'☀️':'🌙';
-    modeBtn.onclick = ()=>{
-      document.body.classList.toggle('dark');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
-      modeBtn.textContent = document.body.classList.contains('dark')?'☀️':'🌙';
-    };
+    
+    function toggleDarkMode() {
+      darkModeEnabled = !darkModeEnabled;
+      document.body.classList.toggle('dark', darkModeEnabled);
+      modeBtn.textContent = darkModeEnabled ? '☀️' : '🌙';
+      modeBtn.setAttribute('aria-label', `Switch to ${darkModeEnabled ? 'light' : 'dark'} mode`);
+    }
+    
+    modeBtn.onclick = toggleDarkMode;
 
     // Routine filtering
     document.querySelectorAll('.filter-btns button').forEach(btn=>{
@@ -358,6 +721,7 @@
       const btn = document.createElement('button');
       btn.textContent='Delete';
       btn.className='delete-routine-btn';
+      btn.setAttribute('aria-label', 'Delete routine');
       btn.onclick = ()=>btn.parentElement.remove();
       return btn;
     }
@@ -365,12 +729,21 @@
     function addRoutine(){
       const time = routineTime.value, desc=routineDesc.value.trim(), part=routinePart.value;
       if(!time || !desc) return;
+      
       const li = document.createElement('li');
       li.dataset.part = part;
-      li.innerHTML = `<i class="fas fa-clock"></i> <span class="time">${time}</span> – ${desc} `;
+      
+      const taskContent = document.createElement('div');
+      taskContent.className = 'task-content';
+      taskContent.innerHTML = `<i class="fas fa-clock"></i> <span class="time">${time}</span> – ${desc}`;
+      
+      li.appendChild(taskContent);
       li.appendChild(createDeleteBtn());
       routineList.appendChild(li);
-      routineTime.value=''; routineDesc.value='';
+      
+      routineTime.value=''; 
+      routineDesc.value='';
+      routineDesc.focus();
     }
 
     addRoutineBtn.onclick = addRoutine;
@@ -379,37 +752,65 @@
 
     document.querySelectorAll('.delete-routine-btn').forEach(btn=>btn.onclick=()=>btn.parentElement.remove());
 
-    // Tasks add/remove
+    // Tasks add/remove (using in-memory storage)
     const taskInput=document.getElementById('task-input');
     const addTaskBtn=document.getElementById('add-task-btn');
     const taskList=document.getElementById('task-list');
+    let tasks = [];
 
     function loadTasks(){
-      const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
       taskList.innerHTML='';
       tasks.forEach((task, idx)=>{
         const li=document.createElement('li');
-        li.style.cssText="background:var(--li-bg); margin:10px 0; padding:12px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;";
-        li.innerHTML=`<span>${task}</span>`;
+        
+        const taskContent = document.createElement('div');
+        taskContent.className = 'task-content';
+        taskContent.innerHTML = `<i class="fas fa-check-circle"></i> <span>${task}</span>`;
+        
         const btn = document.createElement('button');
         btn.textContent='Remove';
         btn.className='delete-task-btn';
-        btn.onclick=()=>{tasks.splice(idx,1); localStorage.setItem('myTasks',JSON.stringify(tasks)); loadTasks();};
+        btn.setAttribute('aria-label', 'Remove task');
+        btn.onclick=()=>{
+          tasks.splice(idx,1); 
+          loadTasks();
+        };
+        
+        li.appendChild(taskContent);
         li.appendChild(btn);
         taskList.appendChild(li);
       });
     }
 
-    addTaskBtn.onclick=()=>{
-      const val=taskInput.value.trim(); if(!val) return;
-      const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
+    function addTask() {
+      const val=taskInput.value.trim(); 
+      if(!val) return;
       tasks.push(val);
-      localStorage.setItem('myTasks',JSON.stringify(tasks));
       taskInput.value='';
+      taskInput.focus();
       loadTasks();
-    };
-    taskInput.addEventListener('keydown', e=>{if(e.key==='Enter') addTaskBtn.onclick();});
+    }
+
+    addTaskBtn.onclick = addTask;
+    taskInput.addEventListener('keydown', e=>{if(e.key==='Enter') addTask();});
     loadTasks();
+
+    // Touch event optimizations for mobile
+    if ('ontouchstart' in window) {
+      document.querySelectorAll('button, li').forEach(el => {
+        el.style.cursor = 'pointer';
+      });
+    }
+
+    // Prevent zoom on double-tap for iOS
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
   </script>
 </body>
 </html>
