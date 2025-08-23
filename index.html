@@ -52,14 +52,6 @@
       font-size: 1.2em;
       color: var(--text);
     }
-    header img {
-      margin-top: 20px;
-      width: 100%;
-      max-height: 250px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
     #clock-date {
       font-size: 1.3em;
       margin-bottom: 10px;
@@ -192,14 +184,25 @@
       margin-top: 40px;
       transition: background 0.4s, color 0.4s;
     }
+    .delete-routine-btn, .delete-task-btn {
+      float:right; 
+      background:#ff6b6b; 
+      color:#fff; 
+      border:none; 
+      border-radius:6px; 
+      padding:4px 12px; 
+      font-size:0.95em; 
+      cursor:pointer; 
+      margin-left:10px;
+    }
   </style>
 </head>
 <body>
   <header>
-  <button id="mode-toggle" title="Toggle dark/light mode">🌙</button>
-  <div id="clock-date"></div>
-  <h1>My Daily Routine</h1>
-  <p>How I spend my day ⏰</p>
+    <button id="mode-toggle" title="Toggle dark/light mode">🌙</button>
+    <div id="clock-date"></div>
+    <h1>My Daily Routine</h1>
+    <p>How I spend my day ⏰</p>
   </header>
 
   <div id="progress-container">
@@ -225,150 +228,137 @@
       <button id="add-routine-btn" style="background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.2s;">Add Routine</button>
     </div>
     <ul id="routine-list">
-  <li data-part="morning"><i class="fas fa-sun"></i> <span class="time">6:00 AM</span> – Wake up & Exercise 🏃 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
-  <li data-part="morning"><i class="fas fa-mug-hot"></i> <span class="time">7:30 AM</span> – Breakfast 🍳 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
-  <li data-part="afternoon"><i class="fas fa-school"></i> <span class="time">11:00 AM</span> – College Classes 🎓 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
-  <li data-part="afternoon"><i class="fas fa-home"></i> <span class="time">4:30 PM</span> – Back Home & Rest 🏠 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
-  <li data-part="evening"><i class="fas fa-book"></i> <span class="time">6:00 PM</span> – Study & Homework 📚 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
-  <li data-part="evening"><i class="fas fa-utensils"></i> <span class="time">9:00 PM</span> – Dinner 🍽️ <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
-  <li data-part="evening"><i class="fas fa-moon"></i> <span class="time">11:00 PM</span> – Sleep 😴 <button class="delete-routine-btn" style="float:right; background:#ff6b6b; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-size:0.95em; cursor:pointer; margin-left:10px;">Delete</button></li>
+      <li data-part="morning"><i class="fas fa-sun"></i> <span class="time">6:00 AM</span> – Wake up & Exercise 🏃 <button class="delete-routine-btn">Delete</button></li>
+      <li data-part="morning"><i class="fas fa-mug-hot"></i> <span class="time">7:30 AM</span> – Breakfast 🍳 <button class="delete-routine-btn">Delete</button></li>
+      <li data-part="afternoon"><i class="fas fa-school"></i> <span class="time">11:00 AM</span> – College Classes 🎓 <button class="delete-routine-btn">Delete</button></li>
+      <li data-part="afternoon"><i class="fas fa-home"></i> <span class="time">4:30 PM</span> – Back Home & Rest 🏠 <button class="delete-routine-btn">Delete</button></li>
+      <li data-part="evening"><i class="fas fa-book"></i> <span class="time">6:00 PM</span> – Study & Homework 📚 <button class="delete-routine-btn">Delete</button></li>
+      <li data-part="evening"><i class="fas fa-utensils"></i> <span class="time">9:00 PM</span> – Dinner 🍽️ <button class="delete-routine-btn">Delete</button></li>
+      <li data-part="evening"><i class="fas fa-moon"></i> <span class="time">11:00 PM</span> – Sleep 😴 <button class="delete-routine-btn">Delete</button></li>
     </ul>
   </div>
 
-  <!-- My Tasks Section -->
   <div class="routine" style="margin-top: 24px;">
     <h2>My Tasks</h2>
     <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap;">
       <input id="task-input" type="text" placeholder="Add a new task..." style="flex:1; min-width:180px; max-width:320px; padding: 10px 14px; border-radius: 8px; border: 1px solid #bde0fe; font-size: 1em; outline: none;">
       <button id="add-task-btn" style="background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.2s;">Add</button>
     </div>
-    <ul id="task-list" style="list-style:none; padding-left:0; margin:0;"></ul>
+    <ul id="task-list"></ul>
   </div>
 
   <footer>
-  <p>© 2025 My Daily Routine Website | Made with ❤️</p>
+    <p>© 2025 My Daily Routine Website | Made with ❤️</p>
   </footer>
 
   <script>
-    // Digital Clock & Date
+    // Clock & Progress Bar
     function updateClock() {
-  const now = new Date();
-  // 12-hour format with AM/PM
-  let hours = now.getHours();
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  const seconds = now.getSeconds().toString().padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  const time = `${hours}:${minutes}:${seconds} ${ampm}`;
-  const date = now.toLocaleDateString([], {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
-  document.getElementById('clock-date').textContent = `${date} | ${time}`;
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2,'0');
+      const seconds = now.getSeconds().toString().padStart(2,'0');
+      const ampm = hours >=12 ? 'PM':'AM';
+      hours = hours % 12 || 12;
+      const time = `${hours}:${minutes}:${seconds} ${ampm}`;
+      const date = now.toLocaleDateString([], {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+      document.getElementById('clock-date').textContent = `${date} | ${time}`;
     }
-    setInterval(updateClock, 1000);
+    setInterval(updateClock,1000);
     updateClock();
 
-    // Progress Bar of the Day
     function updateProgressBar() {
       const now = new Date();
-      const seconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-      const percent = (seconds / 86400) * 100;
-      document.getElementById('progress-bar').style.width = percent + '%';
+      const seconds = now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds();
+      const percent = (seconds/86400)*100;
+      document.getElementById('progress-bar').style.width = percent+'%';
     }
-    setInterval(updateProgressBar, 1000);
+    setInterval(updateProgressBar,1000);
     updateProgressBar();
 
-    // Filter Routine
-    const filterBtns = document.querySelectorAll('.filter-btns button');
-    const routineItems = document.querySelectorAll('#routine-list li');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.getAttribute('data-filter');
-        routineItems.forEach(li => {
-          if (filter === 'all' || li.getAttribute('data-part') === filter) {
-            li.style.display = '';
-          } else {
-            li.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    // Dark/Light Mode Toggle
+    // Dark/Light Mode
     const modeBtn = document.getElementById('mode-toggle');
     function setMode(dark) {
-      if (dark) {
+      if(dark) {
         document.body.classList.add('dark');
         modeBtn.textContent = '☀️';
-        modeBtn.title = 'Switch to light mode';
       } else {
         document.body.classList.remove('dark');
         modeBtn.textContent = '🌙';
-        modeBtn.title = 'Switch to dark mode';
       }
+      localStorage.setItem('darkMode', dark);
     }
-    // Remember mode
-    const savedMode = localStorage.getItem('darkMode');
-    setMode(savedMode === 'true');
-    modeBtn.addEventListener('click', () => {
-      const isDark = !document.body.classList.contains('dark');
-      setMode(isDark);
-      localStorage.setItem('darkMode', isDark);
+    const savedMode = localStorage.getItem('darkMode') === 'true';
+    setMode(savedMode);
+    modeBtn.addEventListener('click', ()=>setMode(!document.body.classList.contains('dark')));
+
+    // Routine Filtering
+    const filterBtns = document.querySelectorAll('.filter-btns button');
+    const routineList = document.getElementById('routine-list');
+    filterBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        filterBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        routineList.querySelectorAll('li').forEach(li=>{
+          li.style.display = (filter==='all'||li.dataset.part===filter)?'':'none';
+        });
+      });
     });
-    // --- My Tasks Section Logic ---
-    // --- Add Routine Section Logic ---
-    const routineInput = document.getElementById('routine-input');
+
+    // Routine Add & Delete
+    const routineTime = document.getElementById('routine-time');
+    const routineDesc = document.getElementById('routine-desc');
     const routinePart = document.getElementById('routine-part');
     const addRoutineBtn = document.getElementById('add-routine-btn');
-    const routineList = document.getElementById('routine-list');
+
+    function createDeleteButton() {
+      const btn = document.createElement('button');
+      btn.textContent = 'Delete';
+      btn.classList.add('delete-routine-btn');
+      btn.onclick = function() {
+        btn.parentElement.remove();
+      }
+      return btn;
+    }
 
     function addRoutine() {
-      const text = routineInput.value.trim();
+      const time = routineTime.value;
+      const desc = routineDesc.value.trim();
       const part = routinePart.value;
-      if (!text) return;
+      if(!time || !desc) return;
       const li = document.createElement('li');
-      li.setAttribute('data-part', part);
-      li.innerHTML = text;
-      li.style.background = 'var(--li-bg)';
-      li.style.margin = '20px 0';
-      li.style.padding = '15px 20px';
-      li.style.borderRadius = '10px';
-      li.style.position = 'relative';
-      li.style.transition = '0.3s, background 0.4s';
-      li.style.color = 'var(--text)';
-      li.style.display = 'block';
+      li.dataset.part = part;
+      li.innerHTML = `<i class="fas fa-clock"></i> <span class="time">${time}</span> – ${desc} `;
+      li.appendChild(createDeleteButton());
       routineList.appendChild(li);
-      routineInput.value = '';
-      // Optionally, re-apply filter
-      const activeBtn = document.querySelector('.filter-btns button.active');
-      if (activeBtn) {
-        const filter = activeBtn.getAttribute('data-filter');
-        const routineItems = document.querySelectorAll('#routine-list li');
-        routineItems.forEach(li => {
-          if (filter === 'all' || li.getAttribute('data-part') === filter) {
-            li.style.display = '';
-          } else {
-            li.style.display = 'none';
-          }
-        });
-      }
-    }
-
-    if (addRoutineBtn && routineInput && routinePart && routineList) {
-      addRoutineBtn.addEventListener('click', addRoutine);
-      routineInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') addRoutine();
+      routineTime.value = '';
+      routineDesc.value = '';
+      // Apply active filter
+      const activeFilter = document.querySelector('.filter-btns button.active').dataset.filter;
+      routineList.querySelectorAll('li').forEach(li=>{
+        li.style.display = (activeFilter==='all'||li.dataset.part===activeFilter)?'':'none';
       });
     }
+
+    addRoutineBtn.addEventListener('click', addRoutine);
+    routineDesc.addEventListener('keydown', e=>{if(e.key==='Enter') addRoutine();});
+    routineTime.addEventListener('keydown', e=>{if(e.key==='Enter') addRoutine();});
+
+    // Enable existing delete buttons
+    document.querySelectorAll('.delete-routine-btn').forEach(btn=>{
+      btn.onclick = ()=>btn.parentElement.remove();
+    });
+
+    // Tasks Add & Delete
     const taskInput = document.getElementById('task-input');
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskList = document.getElementById('task-list');
 
     function loadTasks() {
-      const tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
+      const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
       taskList.innerHTML = '';
-      tasks.forEach((task, idx) => {
+      tasks.forEach((task, idx)=>{
         const li = document.createElement('li');
         li.style.background = 'var(--li-bg)';
         li.style.margin = '10px 0';
@@ -377,18 +367,20 @@
         li.style.display = 'flex';
         li.style.alignItems = 'center';
         li.style.justifyContent = 'space-between';
-        li.innerHTML = `<span>${task}</span> <button style="background: #ff6b6b; color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-size: 0.95em; cursor: pointer;">Remove</button>`;
-        li.querySelector('button').onclick = function() {
-          removeTask(idx);
-        };
+        li.innerHTML = `<span>${task}</span>`;
+        const btn = document.createElement('button');
+        btn.textContent = 'Remove';
+        btn.classList.add('delete-task-btn');
+        btn.onclick = ()=>removeTask(idx);
+        li.appendChild(btn);
         taskList.appendChild(li);
       });
     }
 
     function addTask() {
       const val = taskInput.value.trim();
-      if (!val) return;
-      const tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
+      if(!val) return;
+      const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
       tasks.push(val);
       localStorage.setItem('myTasks', JSON.stringify(tasks));
       taskInput.value = '';
@@ -396,19 +388,15 @@
     }
 
     function removeTask(idx) {
-      const tasks = JSON.parse(localStorage.getItem('myTasks') || '[]');
-      tasks.splice(idx, 1);
+      const tasks = JSON.parse(localStorage.getItem('myTasks')||'[]');
+      tasks.splice(idx,1);
       localStorage.setItem('myTasks', JSON.stringify(tasks));
       loadTasks();
     }
 
-    if (addTaskBtn && taskInput && taskList) {
-      addTaskBtn.addEventListener('click', addTask);
-      taskInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') addTask();
-      });
-      loadTasks();
-    }
+    addTaskBtn.addEventListener('click', addTask);
+    taskInput.addEventListener('keydown', e=>{if(e.key==='Enter') addTask();});
+    loadTasks();
   </script>
 </body>
 </html>
