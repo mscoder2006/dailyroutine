@@ -690,22 +690,16 @@
   </footer>
 
   <script>
-      // Handle login response
+      // Called by Google after login
     function handleCredentialResponse(response) {
       const data = parseJwt(response.credential);
       console.log("User Data:", data);
 
-      // Hide sign-in button
-      document.getElementById("googleSignInBtn").style.display = "none";
+      // Save user info in localStorage (persistent)
+      localStorage.setItem("user", JSON.stringify(data));
 
-      // Show welcome message
-      document.getElementById("userInfo").innerHTML = `
-        <h2>✅ Welcome, ${data.name}</h2>
-        <p>Email: ${data.email}</p>
-        <img src="${data.picture}" alt="Profile Picture" style="border-radius:50%">
-        <br><br>
-        <button onclick="logout()">Logout</button>
-      `;
+      // Update UI
+      showUser(data);
     }
 
     // Decode JWT token
@@ -718,12 +712,32 @@
       return JSON.parse(jsonPayload);
     }
 
-    // Logout function
-    function logout() {
-      document.getElementById("googleSignInBtn").style.display = "block"; // show sign-in button again
-      document.getElementById("userInfo").innerHTML = ""; // clear user info
+    // Show user info + hide sign-in button
+    function showUser(user) {
+      document.getElementById("googleSignInBtn").style.display = "none";
+      document.getElementById("userInfo").innerHTML = `
+        <h2>✅ Welcome, ${user.name}</h2>
+        <p>Email: ${user.email}</p>
+        <img src="${user.picture}" alt="Profile Picture" style="border-radius:50%">
+        <br><br>
+        <button onclick="logout()">Logout</button>
+      `;
     }
 
+    // Logout function
+    function logout() {
+      localStorage.removeItem("user"); // clear storage
+      document.getElementById("googleSignInBtn").style.display = "block";
+      document.getElementById("userInfo").innerHTML = "";
+    }
+
+    // On page load → check if user is already logged in
+    window.onload = function() {
+      const user = localStorage.getItem("user");
+      if (user) {
+        showUser(JSON.parse(user)); // auto login
+      }
+    }
     // Clock
     function updateClock() {
       const now = new Date();
