@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Daily Routine</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -18,10 +21,10 @@
       --footer-bg: #023e8a;
       --footer-text: #fff;
       --border-radius: 15px;
-      --shadow: 0 6px 12px rgba(0,0,0,0.15);
+      --shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
       --transition: 0.3s ease;
     }
-    
+
     body.dark {
       --bg: linear-gradient(to right, #232526, #414345);
       --card-bg: #232526;
@@ -33,11 +36,11 @@
       --footer-bg: #222831;
       --footer-text: #fff;
     }
-    
+
     * {
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -48,33 +51,33 @@
       min-height: 100vh;
       line-height: 1.6;
     }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
     }
-    
+
     header {
       text-align: center;
       padding: 40px 20px 20px 20px;
       position: relative;
     }
-    
+
     header h1 {
       margin: 0;
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       color: var(--text);
       font-weight: 600;
     }
-    
+
     header p {
       margin-top: 10px;
       font-size: clamp(1rem, 2.5vw, 1.2rem);
       color: var(--text);
       opacity: 0.9;
     }
-    
+
     #clock-date {
       font-size: clamp(1rem, 2.8vw, 1.3rem);
       margin-bottom: 10px;
@@ -82,7 +85,7 @@
       font-weight: 600;
       letter-spacing: 1px;
     }
-    
+
     #progress-container {
       width: 100%;
       max-width: 700px;
@@ -91,20 +94,20 @@
       border-radius: 10px;
       height: 18px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-    
+
     #progress-bar {
       height: 100%;
       background: linear-gradient(90deg, #00c6ff, #0072ff);
       width: 0%;
       transition: width 0.5s;
     }
-    
+
     body.dark #progress-bar {
       background: linear-gradient(90deg, #90e0ef, #00b4d8);
     }
-    
+
     .routine {
       max-width: 700px;
       margin: 20px auto;
@@ -114,14 +117,14 @@
       box-shadow: var(--shadow);
       transition: background 0.4s;
     }
-    
+
     .routine h2 {
       text-align: center;
       color: var(--accent);
       margin-bottom: 20px;
       font-size: clamp(1.3rem, 3vw, 1.8rem);
     }
-    
+
     .filter-btns {
       display: flex;
       justify-content: center;
@@ -129,7 +132,7 @@
       gap: 8px;
       margin-bottom: 20px;
     }
-    
+
     .filter-btns button {
       background: var(--li-bg);
       color: var(--accent);
@@ -143,14 +146,14 @@
       min-height: 44px;
       touch-action: manipulation;
     }
-    
+
     .filter-btns button.active,
     .filter-btns button:hover {
       background: var(--accent);
       color: #fff;
       transform: translateY(-2px);
     }
-    
+
     .input-row {
       display: flex;
       gap: 10px;
@@ -158,7 +161,7 @@
       flex-wrap: wrap;
       margin-bottom: 18px;
     }
-    
+
     .input-row input,
     .input-row select,
     .input-row button {
@@ -173,21 +176,21 @@
       transition: var(--transition);
       min-height: 44px;
     }
-    
+
     .input-row input,
     .input-row select {
       background: var(--li-bg);
       color: var(--text);
       border-color: var(--li-bg);
     }
-    
+
     .input-row input:focus,
     .input-row select:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.1);
     }
-    
+
     .input-row button {
       background: var(--accent);
       color: #fff;
@@ -196,19 +199,19 @@
       font-weight: 600;
       touch-action: manipulation;
     }
-    
+
     .input-row button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    
+
     ul {
       position: relative;
       list-style: none;
       padding-left: 30px;
       margin: 0;
     }
-    
+
     ul::before {
       content: '';
       position: absolute;
@@ -219,7 +222,7 @@
       background: var(--timeline);
       border-radius: 2px;
     }
-    
+
     li {
       background: var(--li-bg);
       margin: 15px 0;
@@ -235,12 +238,12 @@
       word-wrap: break-word;
       min-height: 60px;
     }
-    
+
     li:hover {
       background: var(--li-hover);
       transform: translateX(5px);
     }
-    
+
     li::before {
       content: '';
       position: absolute;
@@ -253,20 +256,20 @@
       border-radius: 50%;
       border: 2px solid var(--card-bg);
     }
-    
+
     .task-content {
       flex: 1;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    
+
     .time {
       font-weight: bold;
       color: var(--accent);
       white-space: nowrap;
     }
-    
+
     #mode-toggle {
       position: absolute;
       top: 20px;
@@ -279,17 +282,17 @@
       height: 50px;
       font-size: 1.4em;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       transition: var(--transition);
       touch-action: manipulation;
     }
-    
+
     #mode-toggle:hover {
       background: var(--accent);
       color: #fff;
       transform: scale(1.1);
     }
-    
+
     footer {
       text-align: center;
       padding: 30px 20px;
@@ -298,8 +301,8 @@
       margin-top: 40px;
       transition: background 0.4s, color 0.4s;
     }
-    
-    .delete-routine-btn, 
+
+    .delete-routine-btn,
     .delete-task-btn {
       background: #ff6b6b;
       color: #fff;
@@ -314,7 +317,7 @@
       min-height: 36px;
       touch-action: manipulation;
     }
-    
+
     .delete-routine-btn:hover,
     .delete-task-btn:hover {
       background: #ff5252;
@@ -326,16 +329,16 @@
       .container {
         padding: 0 15px;
       }
-      
+
       .routine {
         margin: 15px auto;
         padding: 18px;
       }
-      
+
       .input-row {
         gap: 8px;
       }
-      
+
       .input-row input,
       .input-row select,
       .input-row button {
@@ -349,32 +352,32 @@
       .container {
         padding: 0 10px;
       }
-      
+
       header {
         padding: 30px 15px 15px 15px;
       }
-      
+
       .routine {
         margin: 15px 10px;
         padding: 16px;
       }
-      
+
       .filter-btns {
         gap: 6px;
       }
-      
+
       .filter-btns button {
         padding: 8px 14px;
         font-size: 0.9rem;
         min-height: 40px;
       }
-      
+
       .input-row {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
       }
-      
+
       .input-row input,
       .input-row select,
       .input-row button {
@@ -383,29 +386,29 @@
         max-width: none;
         min-width: 0;
       }
-      
+
       ul {
         padding-left: 25px;
       }
-      
+
       li {
         flex-direction: column;
         align-items: flex-start;
         padding: 14px 16px;
         min-height: auto;
       }
-      
+
       .task-content {
         width: 100%;
         margin-bottom: 8px;
       }
-      
+
       .delete-routine-btn,
       .delete-task-btn {
         align-self: flex-end;
         margin-top: 8px;
       }
-      
+
       #mode-toggle {
         width: 44px;
         height: 44px;
@@ -413,7 +416,7 @@
         top: 15px;
         right: 15px;
       }
-      
+
       #progress-container {
         margin: 0 10px 20px 10px;
         height: 16px;
@@ -425,60 +428,60 @@
       header {
         padding: 20px 10px;
       }
-      
+
       .routine {
         margin: 10px 5px;
         padding: 12px;
         border-radius: 12px;
       }
-      
+
       .filter-btns {
         gap: 4px;
       }
-      
+
       .filter-btns button {
         padding: 6px 10px;
         font-size: 0.8rem;
         min-height: 36px;
       }
-      
+
       .input-row {
         gap: 10px;
       }
-      
+
       .input-row input,
       .input-row select,
       .input-row button {
         padding: 10px 12px;
         font-size: 0.9rem;
       }
-      
+
       ul {
         padding-left: 20px;
       }
-      
+
       ul::before {
         left: 8px;
         width: 3px;
       }
-      
+
       li {
         padding: 12px 14px;
       }
-      
+
       li::before {
         left: -7px;
         width: 12px;
         height: 12px;
       }
-      
+
       .delete-routine-btn,
       .delete-task-btn {
         padding: 6px 10px;
         font-size: 0.8rem;
         min-height: 32px;
       }
-      
+
       #mode-toggle {
         width: 40px;
         height: 40px;
@@ -486,7 +489,7 @@
         top: 10px;
         right: 10px;
       }
-      
+
       footer {
         padding: 20px 15px;
         font-size: 0.9rem;
@@ -499,24 +502,26 @@
         margin: 8px 3px;
         padding: 10px;
       }
-      
+
       .filter-btns button {
         padding: 5px 8px;
         font-size: 0.75rem;
         min-height: 32px;
       }
-      
+
       li {
         padding: 10px 12px;
       }
-      
+
       .task-content {
         font-size: 0.9rem;
       }
     }
 
     /* High DPI / Retina Display Support */
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+
       .filter-btns button,
       .input-row button,
       .delete-routine-btn,
@@ -527,6 +532,7 @@
 
     /* Touch Device Optimizations */
     @media (hover: none) and (pointer: coarse) {
+
       .filter-btns button,
       .input-row button,
       .delete-routine-btn,
@@ -535,11 +541,11 @@
         min-height: 44px;
         min-width: 44px;
       }
-      
+
       li:hover {
         transform: none;
       }
-      
+
       .filter-btns button:hover,
       .input-row button:hover,
       #mode-toggle:hover {
@@ -552,16 +558,16 @@
       header {
         padding: 20px 15px 10px 15px;
       }
-      
+
       .routine {
         margin: 10px auto;
       }
-      
+
       .input-row {
         flex-direction: row;
         flex-wrap: wrap;
       }
-      
+
       .input-row input,
       .input-row select,
       .input-row button {
@@ -595,8 +601,29 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
+    <!-- Google Login Button -->
+    <div id="g_id_onload"
+      data-client_id="577183381157-tq7ruqu23scdasjjgjt5bv23dmlvv4gu.apps.googleusercontent.com"
+      data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse" data-auto_prompt="false">
+    </div>
+
+
+  <!-- Google button (we will hide it after login) -->
+  <div id="googleSignInBtn" class="g_id_signin"
+       data-type="standard"
+       data-shape="rectangular"
+       data-theme="outline"
+       data-text="signin_with"
+       data-size="large"
+       data-logo_alignment="left">
+  </div>
+
+  <!-- Where we show user info -->
+  <div id="userInfo"></div>
+
     <header>
       <button id="mode-toggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">🌙</button>
       <div id="clock-date"></div>
@@ -630,16 +657,16 @@
       <ul id="routine-list">
         <li data-part="morning">
           <div class="task-content">
-            <i class="fas fa-sun"></i> 
-            <span class="time">6:00 AM</span> 
+            <i class="fas fa-sun"></i>
+            <span class="time">6:00 AM</span>
             – Wake up & Exercise 🏃
           </div>
           <button class="delete-routine-btn" aria-label="Delete routine">Delete</button>
         </li>
         <li data-part="morning">
           <div class="task-content">
-            <i class="fas fa-mug-hot"></i> 
-            <span class="time">7:30 AM</span> 
+            <i class="fas fa-mug-hot"></i>
+            <span class="time">7:30 AM</span>
             – Breakfast 🍳
           </div>
           <button class="delete-routine-btn" aria-label="Delete routine">Delete</button>
@@ -663,49 +690,83 @@
   </footer>
 
   <script>
+      // Handle login response
+    function handleCredentialResponse(response) {
+      const data = parseJwt(response.credential);
+      console.log("User Data:", data);
+
+      // Hide sign-in button
+      document.getElementById("googleSignInBtn").style.display = "none";
+
+      // Show welcome message
+      document.getElementById("userInfo").innerHTML = `
+        <h2>✅ Welcome, ${data.name}</h2>
+        <p>Email: ${data.email}</p>
+        <img src="${data.picture}" alt="Profile Picture" style="border-radius:50%">
+        <br><br>
+        <button onclick="logout()">Logout</button>
+      `;
+    }
+
+    // Decode JWT token
+    function parseJwt(token) {
+      let base64Url = token.split('.')[1];
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    // Logout function
+    function logout() {
+      document.getElementById("googleSignInBtn").style.display = "block"; // show sign-in button again
+      document.getElementById("userInfo").innerHTML = ""; // clear user info
+    }
+
     // Clock
     function updateClock() {
       const now = new Date();
-      let h = now.getHours(), m = now.getMinutes().toString().padStart(2,'0'), s = now.getSeconds().toString().padStart(2,'0');
-      const ampm = h >= 12 ? 'PM':'AM';
+      let h = now.getHours(), m = now.getMinutes().toString().padStart(2, '0'), s = now.getSeconds().toString().padStart(2, '0');
+      const ampm = h >= 12 ? 'PM' : 'AM';
       h = h % 12 || 12;
-      const dateStr = now.toLocaleDateString([], {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+      const dateStr = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
       document.getElementById('clock-date').textContent = `${dateStr} | ${h}:${m}:${s} ${ampm}`;
     }
-    setInterval(updateClock,1000);
+    setInterval(updateClock, 1000);
     updateClock();
 
     // Progress bar
     function updateProgressBar() {
       const now = new Date();
-      const sec = now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds();
-      const pct = (sec/86400)*100;
-      document.getElementById('progress-bar').style.width = pct+'%';
+      const sec = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+      const pct = (sec / 86400) * 100;
+      document.getElementById('progress-bar').style.width = pct + '%';
     }
-    setInterval(updateProgressBar,1000);
+    setInterval(updateProgressBar, 1000);
     updateProgressBar();
 
     // Dark mode (using in-memory storage instead of localStorage)
     let darkModeEnabled = false;
     const modeBtn = document.getElementById('mode-toggle');
-    
+
     function toggleDarkMode() {
       darkModeEnabled = !darkModeEnabled;
       document.body.classList.toggle('dark', darkModeEnabled);
       modeBtn.textContent = darkModeEnabled ? '☀️' : '🌙';
       modeBtn.setAttribute('aria-label', `Switch to ${darkModeEnabled ? 'light' : 'dark'} mode`);
     }
-    
+
     modeBtn.onclick = toggleDarkMode;
 
     // Routine filtering
-    document.querySelectorAll('.filter-btns button').forEach(btn=>{
-      btn.onclick = ()=>{
-        document.querySelectorAll('.filter-btns button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.filter-btns button').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.filter-btns button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const filter = btn.dataset.filter;
-        document.querySelectorAll('#routine-list li').forEach(li=>{
-          li.style.display = (filter==='all'||li.dataset.part===filter)?'':'none';
+        document.querySelectorAll('#routine-list li').forEach(li => {
+          li.style.display = (filter === 'all' || li.dataset.part === filter) ? '' : 'none';
         });
       };
     });
@@ -719,63 +780,63 @@
 
     function createDeleteBtn() {
       const btn = document.createElement('button');
-      btn.textContent='Delete';
-      btn.className='delete-routine-btn';
+      btn.textContent = 'Delete';
+      btn.className = 'delete-routine-btn';
       btn.setAttribute('aria-label', 'Delete routine');
-      btn.onclick = ()=>btn.parentElement.remove();
+      btn.onclick = () => btn.parentElement.remove();
       return btn;
     }
 
-    function addRoutine(){
-      const time = routineTime.value, desc=routineDesc.value.trim(), part=routinePart.value;
-      if(!time || !desc) return;
-      
+    function addRoutine() {
+      const time = routineTime.value, desc = routineDesc.value.trim(), part = routinePart.value;
+      if (!time || !desc) return;
+
       const li = document.createElement('li');
       li.dataset.part = part;
-      
+
       const taskContent = document.createElement('div');
       taskContent.className = 'task-content';
       taskContent.innerHTML = `<i class="fas fa-clock"></i> <span class="time">${time}</span> – ${desc}`;
-      
+
       li.appendChild(taskContent);
       li.appendChild(createDeleteBtn());
       routineList.appendChild(li);
-      
-      routineTime.value=''; 
-      routineDesc.value='';
+
+      routineTime.value = '';
+      routineDesc.value = '';
       routineDesc.focus();
     }
 
     addRoutineBtn.onclick = addRoutine;
-    routineDesc.addEventListener('keydown', e=>{if(e.key==='Enter') addRoutine();});
-    routineTime.addEventListener('keydown', e=>{if(e.key==='Enter') addRoutine();});
+    routineDesc.addEventListener('keydown', e => { if (e.key === 'Enter') addRoutine(); });
+    routineTime.addEventListener('keydown', e => { if (e.key === 'Enter') addRoutine(); });
 
-    document.querySelectorAll('.delete-routine-btn').forEach(btn=>btn.onclick=()=>btn.parentElement.remove());
+    document.querySelectorAll('.delete-routine-btn').forEach(btn => btn.onclick = () => btn.parentElement.remove());
 
     // Tasks add/remove (using in-memory storage)
-    const taskInput=document.getElementById('task-input');
-    const addTaskBtn=document.getElementById('add-task-btn');
-    const taskList=document.getElementById('task-list');
+    const taskInput = document.getElementById('task-input');
+    const addTaskBtn = document.getElementById('add-task-btn');
+    const taskList = document.getElementById('task-list');
     let tasks = [];
 
-    function loadTasks(){
-      taskList.innerHTML='';
-      tasks.forEach((task, idx)=>{
-        const li=document.createElement('li');
-        
+    function loadTasks() {
+      taskList.innerHTML = '';
+      tasks.forEach((task, idx) => {
+        const li = document.createElement('li');
+
         const taskContent = document.createElement('div');
         taskContent.className = 'task-content';
         taskContent.innerHTML = `<i class="fas fa-check-circle"></i> <span>${task}</span>`;
-        
+
         const btn = document.createElement('button');
-        btn.textContent='Remove';
-        btn.className='delete-task-btn';
+        btn.textContent = 'Remove';
+        btn.className = 'delete-task-btn';
         btn.setAttribute('aria-label', 'Remove task');
-        btn.onclick=()=>{
-          tasks.splice(idx,1); 
+        btn.onclick = () => {
+          tasks.splice(idx, 1);
           loadTasks();
         };
-        
+
         li.appendChild(taskContent);
         li.appendChild(btn);
         taskList.appendChild(li);
@@ -783,16 +844,16 @@
     }
 
     function addTask() {
-      const val=taskInput.value.trim(); 
-      if(!val) return;
+      const val = taskInput.value.trim();
+      if (!val) return;
       tasks.push(val);
-      taskInput.value='';
+      taskInput.value = '';
       taskInput.focus();
       loadTasks();
     }
 
     addTaskBtn.onclick = addTask;
-    taskInput.addEventListener('keydown', e=>{if(e.key==='Enter') addTask();});
+    taskInput.addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
     loadTasks();
 
     // Touch event optimizations for mobile
@@ -813,4 +874,5 @@
     }, false);
   </script>
 </body>
+
 </html>
